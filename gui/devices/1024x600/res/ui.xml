@@ -18,6 +18,9 @@
 		<resource name="main_button" type="image" filename="button" />
 		<resource name="file_icon" type="image" filename="file" />
 		<resource name="folder_icon" type="image" filename="folder" />
+		<resource name="fs_bg1" type="image" filename="fileselector_bg1" />
+		<resource name="fs_bg2" type="image" filename="fileselector_bg2" />
+		<resource name="fs_bg3" type="image" filename="fileselector_bg3" />
 		<resource name="progress" type="animation" filename="indeterminate" />
 		<resource name="progress_empty" type="image" filename="progress_empty" />
 		<resource name="progress_full" type="image" filename="progress_fill" />
@@ -391,21 +394,31 @@
 				<placement x="%center_x%" y="%row1_text_y%" placement="4" />
 				<text>Select Zip to Install</text>
 			</object>
-
+			
+			<object type="image">
+				<image resource="fs_bg1" />
+				<placement x="28" y="90" />
+			</object>
+			
 			<object type="fileselector">
-				<placement x="28" y="90" w="282" h="410" />
+				<placement x="33" y="95" w="272" h="400" />
 				<icon folder="folder_icon" file="file_icon" />
-				<background color="#303030" />
+				<background color="#333333" />
 				<font resource="font" spacing="18" color="%text_color%" />
 				<filter folders="1" files="0" />
 				<path name="tw_zip_location" default="/sdcard" />
 				<data name="select" />
 			</object>
-
+			
+			<object type="image">
+				<image resource="fs_bg2" />
+				<placement x="317" y="90" />
+			</object>
+			
 			<object type="fileselector">
-				<placement x="317" y="90" w="682" h="410" />
+				<placement x="322" y="95" w="672" h="400" />
 				<icon folder="folder_icon" file="file_icon" />
-				<background color="#303030" />
+				<background color="#333333" />
 				<font resource="font" spacing="18" color="%text_color%" />
 				<filter extn=".zip" folders="0" files="1" />
 				<path name="tw_zip_location" />
@@ -1514,12 +1527,17 @@
 				<placement x="%center_x%" y="%row1_text_y%" placement="4" />
 				<text>Select Packge to Restore:</text>
 			</object>
-
+			
+			<object type="image">
+				<image resource="fs_bg3" />
+				<placement x="%col2_x%" y="90" />
+			</object>
+			
 			<object type="fileselector">
-				<placement x="%col2_x%" y="90" w="460" h="410" />
+				<placement x="274" y="95" w="450" h="400" />
 				<font resource="font" spacing="18" color="%text_color%" />
 				<icon folder="folder_icon" file="file_icon" />
-				<background color="#303030" />
+				<background color="#333333" />
 				<filter folders="1" files="0" nav="0" />
 				<path name="tw_backups_folder" />
 				<data name="tw_restore" default="" />
@@ -2252,21 +2270,31 @@
 				<placement x="%center_x%" y="%row1_text_y%" placement="4"/>
 				<text>File Manager: Select a File</text>
 			</object>
-
+			
+			<object type="image">
+				<image resource="fs_bg1" />
+				<placement x="28" y="90" />
+			</object>
+			
 			<object type="fileselector">
-				<placement x="28" y="90" w="282" h="410" />
+				<placement x="33" y="95" w="272" h="400" />
 				<icon folder="folder_icon" file="file_icon" />
-				<background color="#303030" />
+				<background color="#333333" />
 				<font resource="font" spacing="18" color="%text_color%" />
 				<filter folders="1" files="0" />
 				<path name="tw_file_location1" default="/sdcard" />
 				<data name="select" />
 			</object>
-
+			
+			<object type="image">
+				<image resource="fs_bg2" />
+				<placement x="317" y="90" />
+			</object>
+			
 			<object type="fileselector">
-				<placement x="317" y="90" w="682" h="410" />
+				<placement x="322" y="95" w="672" h="400" />
 				<icon folder="folder_icon" file="file_icon" />
-				<background color="#303030" />
+				<background color="#333333" />
 				<font resource="font" spacing="18" color="%text_color%" />
 				<filter folders="0" files="1" />
 				<path name="tw_file_location1" />
@@ -2403,12 +2431,17 @@
 				<placement x="%center_x%" y="%row1_text_y%" placement="4"/>
 				<text>Browse to Destination Folder & Press Select</text>
 			</object>
-
+			
+			<object type="image">
+				<image resource="fs_bg3" />
+				<placement x="%col2_x%" y="90" />
+			</object>
+			
 			<object type="fileselector">
-				<placement x="%col2_x%" y="90" w="460" h="410" />
+				<placement x="274" y="95" w="450" h="400" />
 				<font resource="font" spacing="18" color="%text_color%" />
 				<icon folder="folder_icon" file="file_icon" />
-				<background color="#303030" />
+				<background color="#333333" />
 				<filter folders="1" files="0" />
 				<path name="tw_file_location2" default="/sdcard" />
 				<data name="tw_filename2" />
