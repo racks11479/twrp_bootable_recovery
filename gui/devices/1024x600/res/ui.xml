@@ -2720,7 +2720,7 @@
 			<object type="text" color="%text_color%">
 				<font resource="font" />
 				<placement x="%center_x%" y="%row1_text_y%" placement="5" />
-				<text>Select Zip to Install</text>
+				<text>Select Zip to Convert2SD</text>
 			</object>
 
 			<object type="button">
@@ -2846,7 +2846,7 @@
 			<object type="text" color="%text_color%">
 				<font resource="font" />
 				<placement x="%center_x%" y="%row4_text_y%" placement="5" />
-				<text>File to flash:</text>
+				<text>File to Convert2SD:</text>
 			</object>
 
 			<object type="text" color="%text_color%">
@@ -2858,7 +2858,7 @@
 			<object type="text" color="%text_color%">
 				<font resource="font" />
 				<placement x="%center_x%" y="%row6_text_y%" placement="5" />
-				<text>Press back to cancel adding this zip.</text>
+				<text>Press back to cancel conversion of zip.</text>
 			</object>
 
 			<object type="checkbox">
@@ -2877,10 +2877,31 @@
 				<image checked="checkbox_true" unchecked="checkbox_false" />
 			</object>
 
+			<object type="button">
+				<condition var1="tw_zip_queue_count" op="!=" var2="10"></condition>
+				<placement x="%col2_x%" y="%row5_medium_y%" />
+				<font resource="font" color="%button_text_color%" />
+				<text>Add More Zips</text>
+				<image resource="mediumwide_button" />
+				<action function="page">install</action>
+			</object>
+
+			<object type="button">
+				<placement x="%col3_x%" y="%row5_medium_y%" />
+				<font resource="font" color="%button_text_color%" />
+				<text>Clear Queue</text>
+				<image resource="mediumwide_button" />
+				<actions>
+					<action function="queueclear"></action>
+					<action function="page">install</action>
+				</actions>
+			</object>
+
 			<object type="slider">
 				<placement x="%slider_x%" y="%slider_y%" />
 				<resource base="slider" used="slider-used" touch="slider-touch" />
 				<action function="cmd">c2sd.sh %tw_filename%</action>
+				<action function="page">convert2sd_zip</action>
 			</object>
 
 			<object type="text" color="%text_color%">
@@ -2903,6 +2924,79 @@
 			</object>
 
 			<object type="template" name="footer" />
+		</page>
+
+		<page name="convert2sd_zip">
+			<object type="template" name="header" />
+
+			<object type="template" name="flash_zip_console" />
+
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%col1_x%" y="%row16_text_y%" />
+				<text>Flashing file %tw_zip_index% of %tw_zip_queue_count%</text>
+			</object>
+
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%col1_x%" y="%row17_text_y%" />
+				<text>%tw_filename%</text>
+			</object>
+
+			<object type="template" name="progress_bar" />
+
+			<object type="action">
+				<condition var1="tw_operation_state" var2="1" />
+				<action function="page">convert2sd_done</action>
+			</object>
+		</page>
+
+		<page name="convert2sd_done">
+			<object type="template" name="header" />
+
+			<object type="template" name="flash_zip_console" />
+
+			<object type="text" color="%text_fail_color%">
+				<condition var1="tw_operation_status" op="!=" var2="0" />
+				<font resource="font" />
+				<placement x="%center_x%" y="%row17_text_y%" placement="5" />
+				<text>Failed</text>
+			</object>
+
+			<object type="text" color="%text_success_color%">
+				<condition var1="tw_operation_status" var2="0" />
+				<font resource="font" />
+				<placement x="%center_x%" y="%row17_text_y%" placement="5" />
+				<text>Successful</text>
+			</object>
+
+
+			<object type="button">
+				<placement x="%col_center_x%" y="%slider_y%" />
+				<font resource="font" color="%button_text_color%" />
+				<text>Home</text>
+				<image resource="main_button" />
+				<actions>
+					<action function="set">tw_clear_destination=main2</action>
+					<action function="page">clear_vars</action>
+				</actions>
+			</object>
+
+			<object type="action">
+				<touch key="back" />
+				<actions>
+					<action function="set">tw_clear_destination=install</action>
+					<action function="page">clear_vars</action>
+				</actions>
+			</object>
+
+			<object type="action">
+				<touch key="home" />
+				<actions>
+					<action function="set">tw_clear_destination=main2</action>
+					<action function="page">clear_vars</action>
+				</actions>
+			</object>
 		</page>
 		
 		<page name="htcdumlock">
