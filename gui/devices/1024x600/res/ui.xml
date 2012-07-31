@@ -2563,6 +2563,14 @@
 			</object>
 
 			<object type="button">
+				<placement x="%col3_x%" y="%row2_y%" />
+				<font resource="font" color="%button_text_color%" />
+				<text>Convert2SD</text>
+				<image resource="main_button" />
+				<action function="page">convert2sd</action>
+			</object>
+
+			<object type="button">
 				<condition var1="tw_show_dumlock" var2="1" />
 				<placement x="%col4_x%" y="%row2_y%" />
 				<font resource="font" color="%button_text_color%" />
@@ -2706,6 +2714,196 @@
 			<object type="template" name="footer" />
 		</page>
 
+		<page name="convert2sd">
+			<object type="template" name="header" />
+
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%center_x%" y="%row1_text_y%" placement="5" />
+				<text>Select Zip to Install</text>
+			</object>
+
+			<object type="button">
+				<placement x="%col2_x%" y="%zipstorage_text_y%" />
+				<font resource="font" color="%text_color%" />
+				<conditions>
+					<condition var1="tw_has_dual_storage" var2="1" />
+					<condition var1="tw_use_external_storage" var2="1" />
+				</conditions>
+				<text>Using external SD</text>
+				<image resource="radio_true" />
+				<action function="togglestorage">external</action>
+			</object>
+
+			<object type="button">
+				<placement x="%col2_x%" y="%zipstorage_text_y%" />
+				<font resource="font" color="%text_color%" />
+				<conditions>
+					<condition var1="tw_has_dual_storage" var2="1" />
+					<condition var1="tw_use_external_storage" var2="0" />
+				</conditions>
+				<text>Using external SD</text>
+				<image resource="radio_false" />
+				<action function="togglestorage">external</action>
+			</object>
+
+			<object type="button">
+				<placement x="%col3_x%" y="%zipstorage_text_y%" />
+				<font resource="font" color="%text_color%" />
+				<conditions>
+					<condition var1="tw_has_dual_storage" var2="1" />
+					<condition var1="tw_use_external_storage" var2="1" />
+				</conditions>
+				<text>Using internal storage</text>
+				<image resource="radio_false" />
+				<action function="togglestorage">internal</action>
+			</object>
+
+			<object type="button">
+				<placement x="%col3_x%" y="%zipstorage_text_y%" />
+				<font resource="font" color="%text_color%" />
+				<conditions>
+					<condition var1="tw_has_dual_storage" var2="1" />
+					<condition var1="tw_use_external_storage" var2="0" />
+				</conditions>
+				<text>Using internal storage</text>
+				<image resource="radio_true" />
+				<action function="togglestorage">internal</action>
+			</object>
+
+			<object type="fileselector">
+				<placement x="%fileselector_folder_x%" y="%fileselector_install_y%" w="%fileselector_folder_width%" h="%fileselector_install_height%" />
+				<header background="%fileselector_header_background%" textcolor="%fileselector_header_textcolor%" separatorcolor="%fileselector_header_separatorcolor%" separatorheight="%fileselector_header_separatorheight%" />
+				<text>Folders:</text>
+				<separator color="%fileselector_separatorcolor%" height="%fileselector_separatorheight%" />
+				<sort name="tw_gui_sort_order" />
+				<icon folder="folder_icon" file="file_icon" />
+				<background color="%fileselector_background%" />
+				<font resource="font" spacing="%fileselector_spacing%" color="%text_color%" />
+				<filter folders="1" files="0" />
+				<path name="tw_zip_location" default="/sdcard" />
+				<data name="select" />
+			</object>
+
+			<object type="fileselector">
+				<placement x="%fileselector_file_x%" y="%fileselector_install_y%" w="%fileselector_file_width%" h="%fileselector_install_height%" />
+				<header background="%fileselector_header_background%" textcolor="%fileselector_header_textcolor%" separatorcolor="%fileselector_header_separatorcolor%" separatorheight="%fileselector_header_separatorheight%" />
+				<text>%tw_zip_location%</text>
+				<separator color="%fileselector_separatorcolor%" height="%fileselector_separatorheight%" />
+				<sort name="tw_gui_sort_order" />
+				<icon folder="folder_icon" file="file_icon" />
+				<background color="%fileselector_background%" />
+				<font resource="font" spacing="%fileselector_spacing%" color="%text_color%" />
+				<filter extn=".zip" folders="0" files="1" />
+				<path name="tw_zip_location" />
+				<data name="tw_filename" />
+				<selection name="tw_file" />
+			</object>
+			
+			<object type="template" name="sort_options" />
+
+			<object type="action">
+				<condition var1="tw_filename" op="modified" />
+				<actions>
+					<action function="page">convert2sd_confirm</action>
+				</actions>
+			</object>
+
+			<object type="action">
+				<touch key="back" />
+				<action function="page">main</action>
+			</object>
+
+			<object type="action">
+				<touch key="home" />
+				<action function="page">main</action>
+			</object>
+
+			<object type="template" name="footer" />
+		</page>
+
+		<page name="convert2sd_confirm">
+			<object type="template" name="header" />
+
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%center_x%" y="%row1_text_y%" placement="5" />
+				<text>WARNING: This operation may install incompatible software and render your device unusable.</text>
+			</object>
+
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%center_x%" y="%row2_text_y%" placement="5" />
+				<text>Folder:</text>
+			</object>
+
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%center_x%" y="%row3_text_y%" placement="5" />
+				<text>%tw_zip_location%</text>
+			</object>
+
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%center_x%" y="%row4_text_y%" placement="5" />
+				<text>File to flash:</text>
+			</object>
+
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%center_x%" y="%row5_text_y%" placement="5" />
+				<text>%tw_file%</text>
+			</object>
+			
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%center_x%" y="%row6_text_y%" placement="5" />
+				<text>Press back to cancel adding this zip.</text>
+			</object>
+
+			<object type="checkbox">
+				<placement x="%col2_x%" y="%row7_text_y%" />
+				<font resource="font" color="%text_color%" />
+				<text>Zip file signature verification?</text>
+				<data variable="tw_signed_zip_verify" />
+				<image checked="checkbox_true" unchecked="checkbox_false" />
+			</object>
+
+			<object type="checkbox">
+				<placement x="%col2_x%" y="%row8_text_y%" />
+				<font resource="font" color="%text_color%" />
+				<text>Force MD5 check on all zips?</text>
+				<data variable="tw_force_md5_check" />
+				<image checked="checkbox_true" unchecked="checkbox_false" />
+			</object>
+
+			<object type="slider">
+				<placement x="%slider_x%" y="%slider_y%" />
+				<resource base="slider" used="slider-used" touch="slider-touch" />
+				<action function="cmd">c2sd.sh %tw_filename%</action>
+			</object>
+
+			<object type="text" color="%text_color%">
+				<font resource="font" />
+				<placement x="%center_x%" y="%slider_text_y%" placement="4" />
+				<text>Swipe to Confirm Conversion</text>
+			</object>
+
+			<object type="action">
+				<touch key="back" />
+				<actions>
+					<action function="cancelzip"></action>
+					<action function="page">install</action>
+				</actions>
+			</object>
+
+			<object type="action">
+				<touch key="home" />
+				<action function="page">main</action>
+			</object>
+
+			<object type="template" name="footer" />
+		</page>
 		
 		<page name="htcdumlock">
 			<object type="template" name="header" />
