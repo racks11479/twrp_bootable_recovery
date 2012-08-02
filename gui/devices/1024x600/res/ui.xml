@@ -2720,7 +2720,7 @@
 			<object type="text" color="%text_color%">
 				<font resource="font" />
 				<placement x="%center_x%" y="%row1_text_y%" placement="5" />
-				<text>Select Zip to Convert2SD</text>
+				<text>Select Zip to Convert2sd</text>
 			</object>
 
 			<object type="button">
@@ -2805,7 +2805,15 @@
 			<object type="action">
 				<condition var1="tw_filename" op="modified" />
 				<actions>
-					<action function="page">convert2sd_confirm</action>
+					<action function="queuezip"></action>
+					<action function="set">tw_back=advanced</action>
+					<action function="set">tw_action=cmd</action>
+					<action function="set">tw_action_param=c2sd.sh %tw_filename%</action>
+					<action function="set">tw_text1=Convert2SD Zip?</action>
+					<action function="set">tw_action_text1=Converting rom for SD...</action>
+					<action function="set">tw_complete_text1=Conversion Complete</action>
+					<action function="set">tw_slider_text=Swipe to Convert2SD</action>
+					<action function="page">confirm_action</action>
 				</actions>
 			</object>
 
@@ -2820,183 +2828,6 @@
 			</object>
 
 			<object type="template" name="footer" />
-		</page>
-
-		<page name="convert2sd_confirm">
-			<object type="template" name="header" />
-
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="%center_x%" y="%row1_text_y%" placement="5" />
-				<text>WARNING: This operation may install incompatible software and render your device unusable.</text>
-			</object>
-
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="%center_x%" y="%row2_text_y%" placement="5" />
-				<text>Folder:</text>
-			</object>
-
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="%center_x%" y="%row3_text_y%" placement="5" />
-				<text>%tw_zip_location%</text>
-			</object>
-
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="%center_x%" y="%row4_text_y%" placement="5" />
-				<text>File to Convert2SD:</text>
-			</object>
-
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="%center_x%" y="%row5_text_y%" placement="5" />
-				<text>%tw_file%</text>
-			</object>
-			
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="%center_x%" y="%row6_text_y%" placement="5" />
-				<text>Press back to cancel conversion of zip.</text>
-			</object>
-
-			<object type="checkbox">
-				<placement x="%col2_x%" y="%row7_text_y%" />
-				<font resource="font" color="%text_color%" />
-				<text>Zip file signature verification?</text>
-				<data variable="tw_signed_zip_verify" />
-				<image checked="checkbox_true" unchecked="checkbox_false" />
-			</object>
-
-			<object type="checkbox">
-				<placement x="%col2_x%" y="%row8_text_y%" />
-				<font resource="font" color="%text_color%" />
-				<text>Force MD5 check on all zips?</text>
-				<data variable="tw_force_md5_check" />
-				<image checked="checkbox_true" unchecked="checkbox_false" />
-			</object>
-
-			<object type="button">
-				<condition var1="tw_zip_queue_count" op="!=" var2="10"></condition>
-				<placement x="%col2_x%" y="%row5_medium_y%" />
-				<font resource="font" color="%button_text_color%" />
-				<text>Add More Zips</text>
-				<image resource="mediumwide_button" />
-				<action function="page">install</action>
-			</object>
-
-			<object type="button">
-				<placement x="%col3_x%" y="%row5_medium_y%" />
-				<font resource="font" color="%button_text_color%" />
-				<text>Clear Queue</text>
-				<image resource="mediumwide_button" />
-				<actions>
-					<action function="queueclear"></action>
-					<action function="page">install</action>
-				</actions>
-			</object>
-
-			<object type="slider">
-				<placement x="%slider_x%" y="%slider_y%" />
-				<resource base="slider" used="slider-used" touch="slider-touch" />
-				<action function="cmd">c2sd.sh %tw_filename%</action>
-				<action function="page">convert2sd_zip</action>
-			</object>
-
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="%center_x%" y="%slider_text_y%" placement="4" />
-				<text>Swipe to Confirm Conversion</text>
-			</object>
-
-			<object type="action">
-				<touch key="back" />
-				<actions>
-					<action function="cancelzip"></action>
-					<action function="page">install</action>
-				</actions>
-			</object>
-
-			<object type="action">
-				<touch key="home" />
-				<action function="page">main</action>
-			</object>
-
-			<object type="template" name="footer" />
-		</page>
-
-		<page name="convert2sd_zip">
-			<object type="template" name="header" />
-
-			<object type="template" name="flash_zip_console" />
-
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="%col1_x%" y="%row16_text_y%" />
-				<text>Flashing file %tw_zip_index% of %tw_zip_queue_count%</text>
-			</object>
-
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="%col1_x%" y="%row17_text_y%" />
-				<text>%tw_filename%</text>
-			</object>
-
-			<object type="template" name="progress_bar" />
-
-			<object type="action">
-				<condition var1="tw_operation_state" var2="1" />
-				<action function="page">convert2sd_done</action>
-			</object>
-		</page>
-
-		<page name="convert2sd_done">
-			<object type="template" name="header" />
-
-			<object type="template" name="flash_zip_console" />
-
-			<object type="text" color="%text_fail_color%">
-				<condition var1="tw_operation_status" op="!=" var2="0" />
-				<font resource="font" />
-				<placement x="%center_x%" y="%row17_text_y%" placement="5" />
-				<text>Failed</text>
-			</object>
-
-			<object type="text" color="%text_success_color%">
-				<condition var1="tw_operation_status" var2="0" />
-				<font resource="font" />
-				<placement x="%center_x%" y="%row17_text_y%" placement="5" />
-				<text>Successful</text>
-			</object>
-
-
-			<object type="button">
-				<placement x="%col_center_x%" y="%slider_y%" />
-				<font resource="font" color="%button_text_color%" />
-				<text>Home</text>
-				<image resource="main_button" />
-				<actions>
-					<action function="set">tw_clear_destination=main2</action>
-					<action function="page">clear_vars</action>
-				</actions>
-			</object>
-
-			<object type="action">
-				<touch key="back" />
-				<actions>
-					<action function="set">tw_clear_destination=install</action>
-					<action function="page">clear_vars</action>
-				</actions>
-			</object>
-
-			<object type="action">
-				<touch key="home" />
-				<actions>
-					<action function="set">tw_clear_destination=main2</action>
-					<action function="page">clear_vars</action>
-				</actions>
-			</object>
 		</page>
 		
 		<page name="htcdumlock">
