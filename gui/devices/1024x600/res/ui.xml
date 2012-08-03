@@ -2544,6 +2544,27 @@
 				<image resource="main_button" />
 				<action function="page">terminalfolder</action>
 			</object>
+			
+			<object type="button">
+				<placement x="%col4_x%" y="%row1_y%" />
+				<font resource="font" color="%button_text_color%" />
+				<text>SD Rom Partitioning</text>
+				<image resource="main_button" />
+				<actions>
+					<action function="set">tw_back=advanced</action>
+					<action function="set">tw_action=cmd</action>
+					<action function="set">tw_action_param=vg_parted</action>
+					<action function="set">tw_text1=Create partitions on your SDcard for SDRom?</action>
+					<action function="set">tw_text2=Are you sure you want to do this? This cannot be undone!</action>
+					<action function="set">tw_text3=This will wipe out your SDcard.</action>
+					<action function="set">tw_text4=This will take a few minutes.</action>
+					<action function="set">tw_action_text1=Creating partitions for SDRom...</action>
+					<action function="set">tw_action_text2=This will take a few minutes.</action>
+					<action function="set">tw_complete_text1=SDRom Partitioning Complete</action>
+					<action function="set">tw_slider_text=Swipe to Confirm</action>
+					<action function="page">confirm_action</action>
+				</actions>
+			</object>
 
 			<object type="button">
 				<condition var1="tw_allow_partition_sdcard" var2="1" />
@@ -2810,7 +2831,7 @@
 					<action function="set">tw_action=cmd</action>
 					<action function="set">tw_action_param=c2sd.sh %tw_filename%</action>
 					<action function="set">tw_text1=Convert2SD Zip?</action>
-					<action function="set">tw_action_text1=Converting rom for SD...</action>
+					<action function="set">tw_action_text1=Converting ROM for SD...</action>
 					<action function="set">tw_complete_text1=Conversion Complete</action>
 					<action function="set">tw_slider_text=Swipe to Convert2SD</action>
 					<action function="page">confirm_action</action>
